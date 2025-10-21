@@ -7,9 +7,7 @@ import {
 
 export function MultiWalletTest() {
   const { connections, recentConnections } = useAppKitConnections();
-  const { switchConnection, deleteConnection } = useAppKitConnection({
-    namespace: "eip155",
-  });
+  const { switchConnection, deleteConnection } = useAppKitConnection({});
   const { disconnect } = useDisconnect();
   const [lastSelected, setLastSelected] = useState<string | null>(null);
   const [loading, setLoading] = useState<string | null>(null);

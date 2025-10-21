@@ -1,6 +1,14 @@
 import { createAppKit } from "@reown/appkit/react";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, sepolia } from "@reown/appkit/networks";
+import { SolanaAdapter } from "@reown/appkit-adapter-solana";
+import {
+  mainnet,
+  optimism,
+  sepolia,
+  solana,
+  solanaTestnet,
+  solanaDevnet,
+} from "@reown/appkit/networks";
 import { QueryClient } from "@tanstack/react-query";
 
 // Get projectId from https://cloud.reown.com
@@ -18,11 +26,16 @@ export const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/179229932"],
 };
 
-// Create Wagmi Adapter
+// Create Wagmi Adapter for EVM chains
 export const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, sepolia],
   projectId,
   ssr: false,
+});
+
+// Create Solana Adapter
+export const solanaAdapter = new SolanaAdapter({
+  wallets: [],
 });
 
 // Create query client
@@ -30,12 +43,12 @@ export const queryClient = new QueryClient();
 
 // Create the modal with multi-wallet enabled
 export const modal = createAppKit({
-  adapters: [wagmiAdapter],
-  networks: [mainnet, sepolia],
+  adapters: [wagmiAdapter, solanaAdapter],
+  networks: [mainnet, optimism, sepolia, solana, solanaTestnet, solanaDevnet],
   projectId,
   metadata,
   features: {
-    // analytics: true,
+    analytics: false,
   },
   themeMode: "light",
   themeVariables: {
